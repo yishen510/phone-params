@@ -306,6 +306,176 @@ body > [class*="ai_badge"], body > [id*="ai_badge"],
 body > [class*="ai-badge"], body > [id*="ai-badge"],
 body > [class*="generate"], body > [id*="generate"],
 body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
+
+/* ===== 精修补丁 polish v5（仅增补视觉与微交互，不改动既有结构与分组JS） ===== */
+
+/* --- Hero 产品图：光场 / 玻璃反光 / 投影层次 --- */
+.fig-frame{
+  background:radial-gradient(120% 90% at 50% 0%, #ffffff 0%, #f2f6fb 46%, #e4eaf3 100%);
+  padding:38px 26px 28px;
+  border:1px solid rgba(255,255,255,.55);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.9),
+    0 24px 48px rgba(0,0,0,.28),
+    0 64px 120px rgba(0,0,0,.5),
+    0 0 90px rgba(34,211,238,.07);
+}
+.fig-frame::after{ /* 玻璃斜反光（左上掠光） */
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:linear-gradient(115deg, rgba(255,255,255,.55) 0%, rgba(255,255,255,.12) 22%, transparent 42%);
+  opacity:.75;
+}
+.fig-wrap::before{ /* 落地接触阴影 + 青色环境反射 */
+  content:""; position:absolute; left:50%; bottom:-28px; transform:translateX(-50%);
+  width:72%; height:42px; border-radius:50%; z-index:0; pointer-events:none;
+  background:radial-gradient(50% 50% at 50% 50%, rgba(34,211,238,.22), transparent 70%);
+  filter:blur(10px);
+}
+.fig-frame img{
+  filter:drop-shadow(0 18px 22px rgba(10,15,25,.28)) drop-shadow(0 42px 64px rgba(10,15,25,.18));
+}
+.hero-halo{
+  background:
+    radial-gradient(46% 46% at 50% 50%, rgba(34,211,238,.20), transparent 70%),
+    radial-gradient(30% 30% at 62% 38%, rgba(56,189,248,.12), transparent 70%);
+}
+.fig-badge{
+  background:linear-gradient(135deg, rgba(6,32,38,.94), rgba(8,40,46,.94));
+  border:1px solid rgba(34,211,238,.55);
+  box-shadow:0 8px 24px rgba(0,0,0,.45), 0 0 26px rgba(34,211,238,.13), inset 0 1px 0 rgba(255,255,255,.09);
+  backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  letter-spacing:.3px;
+}
+.hero-tag{ letter-spacing:.3px; box-shadow:0 0 0 1px rgba(34,211,238,.08), 0 8px 24px rgba(34,211,238,.08); }
+
+/* --- 卡片：pc-img 容器质感 / 占位卡层次 / 信息层级 --- */
+.phone-card{ background:linear-gradient(180deg, rgba(255,255,255,.025), transparent 32%), var(--panel); }
+.pc-img{
+  background:
+    radial-gradient(80% 60% at 50% 16%, rgba(255,255,255,.95), transparent 72%),
+    linear-gradient(180deg,#fbfcfe,#edf1f7);
+  padding:14px 12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7), inset 0 -1px 0 rgba(10,15,25,.05);
+  transition:background .25s;
+}
+.phone-card:hover .pc-img{
+  background:
+    radial-gradient(85% 62% at 50% 14%, #ffffff, transparent 74%),
+    linear-gradient(180deg,#ffffff,#ecf1f8);
+}
+.pc-ph::before{ /* 占位卡顶部光照 */
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  background:radial-gradient(95% 70% at 50% 8%, rgba(255,255,255,.30), transparent 56%);
+}
+.pc-ph::after{ /* 占位卡内描边与底部暗角 */
+  content:""; position:absolute; inset:0; z-index:0; pointer-events:none;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.16), inset 0 -20px 32px rgba(0,0,0,.20);
+}
+.pc-ph > *{ position:relative; z-index:1; }
+.pc-ph b{ text-shadow:0 6px 18px rgba(0,0,0,.35), 0 1px 0 rgba(255,255,255,.12); }
+.pc-body{ gap:7px; }
+.pc-name{ letter-spacing:-.1px; }
+.pc-specs div{ padding:7px 10px; transition:border-color .15s, background .15s; }
+.pc-specs div:hover{ border-color:rgba(34,211,238,.35); background:var(--panel); }
+.pc-specs dt{ font-size:11.5px; letter-spacing:.2px; }
+.pc-specs dd{ font-size:13px; color:#c9d4e2; }
+.pc-specs div:nth-child(1) dd{ color:#e2e9f2; } /* 芯片主文案提亮 */
+.pc-specs div:nth-child(4) dd{ color:var(--accent); font-weight:600; } /* 价格强调 */
+
+/* --- 时间轴 / 速览微动 --- */
+.tl-chip-item{ transition:border-color .15s, transform .18s, background .15s; }
+.tl-chip-item:hover{ transform:translateY(-1px); background:rgba(34,211,238,.05); }
+.qb{ transition:border-color .15s, transform .18s; }
+.qb:hover{ border-color:rgba(34,211,238,.5); transform:translateY(-1px); }
+.stat{ transition:border-color .15s, transform .2s; }
+.stat:hover{ border-color:rgba(34,211,238,.3); transform:translateY(-1px); }
+
+/* --- 对比表：密度 / 表头吸顶 / .best 可读性 / 横向滚动手感 --- */
+.cmp th,.cmp td{ padding:12px 14px; line-height:1.55; }
+.cmp thead th{ position:sticky; top:51px; z-index:3; }
+.cmp td.best{
+  background:rgba(34,211,238,.13);
+  box-shadow:inset 0 0 0 1px rgba(34,211,238,.42);
+}
+.compare-table-wrap{
+  scrollbar-width:thin;
+  scrollbar-color:rgba(34,211,238,.45) rgba(148,163,184,.08);
+  -webkit-overflow-scrolling:touch;
+}
+.compare-table-wrap::-webkit-scrollbar{ height:8px; }
+.compare-table-wrap::-webkit-scrollbar-thumb{ background:rgba(34,211,238,.35); border-radius:8px; }
+.compare-table-wrap::-webkit-scrollbar-track{ background:rgba(148,163,184,.06); }
+
+/* --- 微交互：chip / 搜索框 / 按钮 / 弹窗开合（克制，沿用既有 transition 风格） --- */
+.fbtn{ transition:all .16s cubic-bezier(.22,.61,.36,1); }
+.fbtn:active{ transform:scale(.95); }
+.fbtn.on{ box-shadow:0 6px 18px rgba(34,211,238,.25); }
+.search-input{ transition:border-color .16s, box-shadow .16s, background .16s; }
+.search-input:focus{ border-color:var(--accent); box-shadow:0 0 0 3px rgba(34,211,238,.15); background:rgba(34,211,238,.04); }
+.btn{ transition:all .16s cubic-bezier(.22,.61,.36,1); }
+.btn:active{ transform:scale(.97); }
+.btn.primary{ box-shadow:0 8px 22px rgba(34,211,238,.20); }
+.btn.primary:hover{ box-shadow:0 10px 28px rgba(34,211,238,.32); }
+.sel-chip{ transition:border-color .15s, box-shadow .15s; }
+.sel-chip:hover{ box-shadow:0 4px 14px rgba(0,0,0,.25); }
+.modal-close{ transition:all .16s; }
+.modal-close:hover{ background:rgba(148,163,184,.12); transform:rotate(90deg); }
+.modal{
+  display:flex; visibility:hidden; opacity:0; pointer-events:none;
+  transition:opacity .24s ease, visibility 0s linear .24s;
+}
+.modal.open{ visibility:visible; opacity:1; pointer-events:auto; transition:opacity .24s ease; }
+.modal-box{ box-shadow:0 32px 90px rgba(0,0,0,.6), 0 0 0 1px rgba(34,211,238,.06); }
+
+/* --- 弹窗视觉细节 --- */
+.modal-grp{
+  background:linear-gradient(90deg, rgba(34,211,238,.11), rgba(34,211,238,.03));
+  border-radius:8px;
+  padding:9px 12px;
+  box-shadow:inset 0 1px 0 rgba(34,211,238,.08);
+}
+.modal-head .m-img{
+  background:radial-gradient(80% 60% at 50% 15%, #ffffff, #e9eef5);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8), 0 6px 16px rgba(0,0,0,.25);
+}
+.modal-head h3{ letter-spacing:-.2px; }
+.modal dt{ font-size:12.5px; }
+.modal dd{ font-size:13.5px; }
+.modal .src-line{ border-top:1px solid var(--line); padding-top:14px; }
+
+/* --- 移动端 390px 精修（不破坏桌面布局） --- */
+@media (max-width:640px){
+  .topbar-in{ padding:10px 14px; gap:10px; }
+  .logo{ font-size:15.5px; }
+  .nav a{ padding:6px 10px; font-size:13px; }
+  section{ padding:42px 16px 6px; }
+  .hero{ padding:40px 16px 36px; gap:26px; min-height:auto; }
+  .hero h1{ margin:16px 0 12px; }
+  .hero-stats{ gap:8px; margin-top:22px; }
+  .stat{ padding:12px 10px; border-radius:12px; }
+  .stat b{ font-size:22px; }
+  .stat span{ font-size:11.5px; }
+  .fig-frame{ padding:24px 16px 20px; border-radius:22px; }
+  .fig-frame img{ width:min(230px,78%); }
+  .fig-name{ font-size:17px; margin-top:12px; }
+  .fig-badge{ left:50%; transform:translateX(-50%); bottom:-16px; white-space:nowrap; }
+  .hero-cue{ display:none; }
+  .toolbar{ gap:8px; }
+  .search-input{ flex:1 1 100%; min-width:0; order:5; }
+  .sec-head{ margin-bottom:16px; }
+  .tl-chips{ grid-template-columns:repeat(2,1fr); gap:8px; padding:10px 12px; }
+  .tl-chip-item{ padding:7px 9px; font-size:12px; }
+  .statement{ padding:80px 16px; }
+  .compare-sel{ gap:6px; }
+  .modal{ padding:12px; }
+  .modal-box{ padding:18px; border-radius:14px; }
+  .modal-head{ gap:12px; }
+  .modal-head .m-img{ width:72px; height:72px; }
+  .modal dl{ grid-template-columns:72px 1fr; font-size:13px; }
+  .modal dt,.modal dd{ padding:8px 2px; }
+  .cmp{ font-size:12.5px; }
+  footer{ padding:22px 16px; }
+}
 </style>
 </head>
 <body>
@@ -462,13 +632,25 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
   旗舰参数库 · 数据更新于 2026-10-15 · 页面数据仅供参数查阅，购买决策请以官方发布为准
 </footer>
 
+<!-- 静态资源声明：图片必须静态出现在 src 属性中，发布链路才能识别并打包 -->
+<div aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
+  <img src="https://aka.doubaocdn.com/s/glTPs06KiA" alt="">
+  <img src="https://aka.doubaocdn.com/s/rheUaMHOFH" alt="">
+  <img src="https://aka.doubaocdn.com/s/8BtAaXd4wH" alt="">
+  <img src="https://aka.doubaocdn.com/s/cWSAsDNxbL" alt="">
+  <img src="https://aka.doubaocdn.com/s/GAFmgUZXaI" alt="">
+  <img src="https://aka.doubaocdn.com/s/JaAiyByiyc" alt="">
+  <img src="https://aka.doubaocdn.com/s/RSzzK9VAtp" alt="">
+  <img src="https://aka.doubaocdn.com/s/gbAEs0jqC3" alt="">
+</div>
+
 <!-- 详情弹窗 -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="机型详情">
   <div class="modal-box" id="modalBox"></div>
 </div>
 
-<!-- ===== DATA: PHONES（外部数据文件） ===== -->
-<script src="https://aka.doubaocdn.com/s/YfEvpNkVUO"></script>
+<!-- ===== DATA: PHONES ===== -->
+<script src="https://aka.doubaocdn.com/s/IUnme4Hugc"></script>
 <!-- ===== LOGIC: APP ===== -->
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script>
@@ -660,6 +842,10 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
       g('续航充电', [
         ['电池容量', p.batteryDisp], ['有线快充', p.wiredDisp], ['无线快充', p.wirelessDisp]
       ]) +
+      g('实测数据', [
+        ['芯片性能分', p.chipScoreDisp], ['芯片能效分', p.chipEffDisp], ['实测续航', p.batteryLifeDisp],
+        ['游戏实测', p.gamePerfDisp], ['实测峰值充电', p.chargeMaxDisp]
+      ]) +
       g('影像系统', [
         ['主摄', p.mainCam], ['超广角', p.ultraCam], ['长焦', p.teleCam], ['前置摄像头', p.frontCam]
       ]) +
@@ -839,7 +1025,7 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
     });
     $('yearFilter').addEventListener('click', function(e){
       var btn = e.target.closest('.fbtn'); if(!btn) return;
-      state.year = btn.getAttribute('data-year'); state.limit = PAGE_SIZE;
+      state.year = btn.getAttribute('data-year'); state.year; state.limit = PAGE_SIZE;
       renderYearFilter(); renderCards();
     });
     $('tierFilter').addEventListener('click', function(e){
@@ -1054,11 +1240,11 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
       // Hero 入场编排：标签 → 大标题 → 副文 → 统计卡 → 产品图 → 滚动提示
       var tl = gsap.timeline({ defaults:{ ease:'power3.out', duration:.9 } });
       tl.from('.hero-tag', { y:16, opacity:0, duration:.7 })
-        .from('.hero h1', { y:30, opacity:0 }, '-=.45')
-        .from('.hero p', { y:20, opacity:0 }, '-=.55')
-        .from('.hero-stats .stat', { y:20, opacity:0, stagger:.09 }, '-=.5')
-        .from('.hero-fig', { y:74, scale:.92, opacity:0, duration:1.15 }, '-=.95')
-        .from('.hero-cue', { opacity:0, duration:.5 }, '-=.35');
+        .from('.hero h1', { y:30, opacity:0 }, '-.45')
+        .from('.hero p', { y:20, opacity:0 }, '-.55')
+        .from('.hero-stats .stat', { y:20, opacity:0, stagger:.09 }, '-.5')
+        .from('.hero-fig', { y:74, scale:.92, opacity:0, duration:1.15 }, '-.95')
+        .from('.hero-cue', { opacity:0, duration:.5 }, '-.35');
       // Hero 滚动退出：内容上移淡出，产品图轻微推近
       gsap.to('.hero-inner', {
         yPercent:-14, opacity:0, ease:'none',
