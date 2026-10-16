@@ -501,7 +501,7 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
   <div class="hero-inner">
     <span class="hero-tag">2021 – 2026 近五年机型 · 24 项全面参数</span>
     <h1>一部看懂手机的<br><span class="grad">全部硬核参数</span></h1>
-    <p>收录华为、苹果、小米、vivo、OPPO、荣耀、三星、一加、iQOO、Redmi、真我等 11 大品牌 213 款近五年旗舰与主流机型，覆盖发布时间、处理器、屏幕、电池、快充、影像、机身、防护等 24 项参数，支持多机型一键对比、最优值自动高亮。</p>
+    <p>收录华为、苹果、小米、vivo、OPPO、荣耀、三星、一加、iQOO、Redmi、真我等 11 大品牌 210 款近五年旗舰与主流机型，覆盖发布时间、处理器、屏幕、电池、快充、影像、机身、防护等 24 项参数，支持多机型一键对比、最优值自动高亮。</p>
     <div class="hero-stats">
       <div class="stat"><b class="num" id="statPhones">0</b><span>款收录机型</span></div>
       <div class="stat"><b class="num" id="statBrands">0</b><span>大手机品牌</span></div>
@@ -572,7 +572,7 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
 <section class="statement" id="statement" aria-label="站点亮点">
   <div class="statement-in">
     <div class="big">参数不用背，<br><span class="grad">打开就能比。</span></div>
-    <p class="sub">24 项核心维度、213 款近五年机型、11 大品牌、官方数据源逐条可查——把发布会上的参数表，变成一眼能看懂的对比。勾选机型，最优值自动高亮。</p>
+    <p class="sub">24 项核心维度、210 款近五年机型、11 大品牌、官方数据源逐条可查——把发布会上的参数表，变成一眼能看懂的对比。勾选机型，最优值自动高亮。</p>
   </div>
 </section>
 
@@ -632,17 +632,6 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
   旗舰参数库 · 数据更新于 2026-10-15 · 页面数据仅供参数查阅，购买决策请以官方发布为准
 </footer>
 
-<!-- 静态资源声明：图片必须静态出现在 src 属性中，发布链路才能识别并打包 -->
-<div aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden">
-  <img src="https://aka.doubaocdn.com/s/glTPs06KiA" alt="">
-  <img src="https://aka.doubaocdn.com/s/rheUaMHOFH" alt="">
-  <img src="https://aka.doubaocdn.com/s/8BtAaXd4wH" alt="">
-  <img src="https://aka.doubaocdn.com/s/cWSAsDNxbL" alt="">
-  <img src="https://aka.doubaocdn.com/s/GAFmgUZXaI" alt="">
-  <img src="https://aka.doubaocdn.com/s/JaAiyByiyc" alt="">
-  <img src="https://aka.doubaocdn.com/s/RSzzK9VAtp" alt="">
-  <img src="https://aka.doubaocdn.com/s/gbAEs0jqC3" alt="">
-</div>
 
 <!-- 详情弹窗 -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="机型详情">
@@ -650,7 +639,7 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
 </div>
 
 <!-- ===== DATA: PHONES ===== -->
-<script src="https://aka.doubaocdn.com/s/IUnme4Hugc"></script>
+<script src="https://aka.doubaocdn.com/s/CD9QHmq31r"></script>
 <!-- ===== LOGIC: APP ===== -->
 <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
 <script>
@@ -1025,7 +1014,7 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
     });
     $('yearFilter').addEventListener('click', function(e){
       var btn = e.target.closest('.fbtn'); if(!btn) return;
-      state.year = btn.getAttribute('data-year'); state.year; state.limit = PAGE_SIZE;
+      state.year = btn.getAttribute('data-year'); state.limit = PAGE_SIZE;
       renderYearFilter(); renderCards();
     });
     $('tierFilter').addEventListener('click', function(e){
@@ -1240,11 +1229,11 @@ body > [class*="watermark"], body > [id*="watermark"]{display:none !important}
       // Hero 入场编排：标签 → 大标题 → 副文 → 统计卡 → 产品图 → 滚动提示
       var tl = gsap.timeline({ defaults:{ ease:'power3.out', duration:.9 } });
       tl.from('.hero-tag', { y:16, opacity:0, duration:.7 })
-        .from('.hero h1', { y:30, opacity:0 }, '-.45')
-        .from('.hero p', { y:20, opacity:0 }, '-.55')
-        .from('.hero-stats .stat', { y:20, opacity:0, stagger:.09 }, '-.5')
-        .from('.hero-fig', { y:74, scale:.92, opacity:0, duration:1.15 }, '-.95')
-        .from('.hero-cue', { opacity:0, duration:.5 }, '-.35');
+        .from('.hero h1', { y:30, opacity:0 }, '-=.45')
+        .from('.hero p', { y:20, opacity:0 }, '-=.55')
+        .from('.hero-stats .stat', { y:20, opacity:0, stagger:.09 }, '-=.5')
+        .from('.hero-fig', { y:74, scale:.92, opacity:0, duration:1.15 }, '-=.95')
+        .from('.hero-cue', { opacity:0, duration:.5 }, '-=.35');
       // Hero 滚动退出：内容上移淡出，产品图轻微推近
       gsap.to('.hero-inner', {
         yPercent:-14, opacity:0, ease:'none',
